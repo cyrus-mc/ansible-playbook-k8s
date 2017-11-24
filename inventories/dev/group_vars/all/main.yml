@@ -1,0 +1,13 @@
+---
+etcd_endpoints: &etcd_endpoints "{{ ansible_local.k8s_facts.etcd_servers | default('localhost') }}"
+
+# locksmithd etcd servers used for coordination
+locksmithd_etcd_endpoints: *etcd_endpoints
+
+# locksmithd control group
+locksmithd_control_group: "{{ ansible_local.k8s_facts.labels.role | default('') }}"
+
+# set the version of hyperkube to use
+hyperkube:
+  image: quay.io/coreos/hyperkube
+  tag: v1.7.6_coreos.0
