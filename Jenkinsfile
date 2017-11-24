@@ -7,7 +7,9 @@ withAnsible(image: 'cyrusmc/ansible:2.3.0') {
     properties ([
       [ $class: 'BuildDiscarderProperty', strategy: [ $class: 'LogRotator', daysToKeeyStr: '7', numToKeep: '10' ] ],
       parameters ([
-        string(name: 'HOSTNAME', defaultValue: 'NOT_SET', description: 'The hostname of the target')
+        string(name: 'hostname', defaultValue: 'NOT_SET', description: 'The hostname of the target'),
+        string(name: 'ip', defaultValue: '127.0.0.1', description: 'The accessible IP address of the target')
+        choice(name: 'playbook', choices: 'control-plane\nnode', description: 'The playbook to execute on the target')
       ])
     ])
 
@@ -17,7 +19,7 @@ withAnsible(image: 'cyrusmc/ansible:2.3.0') {
     stage('Set Display Name') {
       // this job is used to automate playbook runs as machines are dynamically
       // provisioned. Set the display name to indicate machine this run was for
-      currentBuild.displayName = "Testing"
+      currentBuild.displayName = "${params.hostname} : ${params.playbook}"
     }
 
     stage('Execute') {
