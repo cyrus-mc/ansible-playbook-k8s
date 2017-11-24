@@ -8,7 +8,7 @@ withAnsible(image: 'cyrusmc/ansible:2.3.0') {
       [ $class: 'BuildDiscarderProperty', strategy: [ $class: 'LogRotator', daysToKeeyStr: '7', numToKeep: '10' ] ],
       parameters ([
         string(name: 'hostname', defaultValue: 'NOT_SET', description: 'The hostname of the target'),
-        string(name: 'ip', defaultValue: '127.0.0.1', description: 'The accessible IP address of the target')
+        string(name: 'ip', defaultValue: '127.0.0.1', description: 'The accessible IP address of the target'),
         choice(name: 'playbook', choices: 'control-plane\nnode', description: 'The playbook to execute on the target')
       ])
     ])
