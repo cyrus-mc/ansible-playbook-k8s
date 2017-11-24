@@ -10,7 +10,7 @@
   tasks:
   - include_vars: "{{ item }}"
     with_items:
-    - "vars/master_default.yml"
+    - "../vars/master_default.yml"
   - include_role:
       name: etcd
   - include_role:

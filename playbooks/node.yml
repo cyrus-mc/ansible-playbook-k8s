@@ -10,11 +10,11 @@
       var: ansible_local.k8s_facts.labels.role
   - include_vars: "{{ item }}"
     with_items:
-    - "vars/{{ ansible_local.k8s_facts.labels.role | default('default') }}.yml"
+    - "../vars/{{ ansible_local.k8s_facts.labels.role | default('default') }}.yml"
     ignore_errors: true
   - include_vars: "{{ item }}"
     with_items:
-    - "vars/default.yml"
+    - "../vars/default.yml"
     ignore_errors: true
   - include_role:
       name: flannel
