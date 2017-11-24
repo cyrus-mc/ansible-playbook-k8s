@@ -1,0 +1,38 @@
+---
+sysctl:
+  vm.swappiness:
+    value: 1
+    state: present
+  net.core.somaxconn:
+    value: 4096
+    state: present
+  net.ipv4.tcp_fin_timeout:
+    value: 30
+    state: present
+  net.ipv4.tcp_keepalive_intvl:
+    value: 30
+    state: present
+  net.ipv4.tcp_keepalive_time:
+    value: 120
+    state: present
+  net.ipv4.tcp_max_syn_backlog:
+    value: 4096
+    state: present
+  vm.dirty_ratio:
+    value: "{{ 10 if (ansible_memtotal_mb > 65536) else 20 }}"
+    state: present
+  vm.dirty_background_ratio:
+    value: "{{ 5 if (ansible_memtotal_mb > 65536) else 10 }}"
+    state: present
+
+rules:
+  60-kubernetes-mounts:
+    ACTION:
+    - 'add'
+    - 'change'
+    KERNEL: 'xvdb[a-z]+'
+    ATTR:
+    - name: 'queue/scheduler'
+      value: 'none'
+    - name: 'bdi/read_ahead_kb'
+      value: 16

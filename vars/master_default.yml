@@ -1,0 +1,20 @@
+---
+etcd_endpoints: &etcd_endpoints "{{ ansible_local.k8s_facts.etcd_servers | default('localhost') }}"
+
+etcd_version: "v3.1.8"
+etcd_discovery_srv: "{{ ansible_local.k8s_facts.srv_domain }}"
+etcd_advertise_client_urls: "http://{{ ansible_eth0.ipv4.address | default('localhost') }}:2379"
+etcd_initial_advertise_peer_urls: "http://{{ ansible_eth0.ipv4.address | default('localhost') }}:2380"
+etcd_initial_cluster_token: "etcd-cluster-{{ ansible_local.k8s_facts.cluster_name }}"
+etcd_name: "{{ ansible_local.k8s_facts.hostname | default(ansible_hostname) }}"
+
+# locksmithd etcd servers used for coordination
+locksmithd_etcd_endpoints: *etcd_endpoints
+# locksmithd control group
+locksmithd_control_group: "kubernetes-master"
+
+# set the version of hyperkube to use
+hyperkube:
+  image: quay.io/coreos/hyperkube
+  tag: v1.7.6_coreos.0
+

@@ -1,0 +1,35 @@
+---
+- hosts: all
+  serial: 1
+  vars:
+    ansible_python_interpreter: "/home/core/bin/python"
+    ansible_become: true
+  gather_facts: true
+  tasks:
+  - debug:
+      var: ansible_local.k8s_facts.labels.role
+  - include_vars: "{{ item }}"
+    with_items:
+    - "vars/{{ ansible_local.k8s_facts.labels.role | default('default') }}.yml"
+    ignore_errors: true
+  - include_vars: "{{ item }}"
+    with_items:
+    - "vars/default.yml"
+    ignore_errors: true
+  - include_role:
+      name: flannel
+  - include_role:
+      name: docker
+  - include_role:
+      name: locksmith
+  - include_role:
+      name: sysctl
+  - include_role:
+      name: udev
+  - include_role:
+      name: timesyncd
+  - include_role:
+      name: transparent_hugepages
+    when: ansible_local.k8s_facts.labels.role == 'mongodb'
+  - include_role:
+      name: k8s-worker

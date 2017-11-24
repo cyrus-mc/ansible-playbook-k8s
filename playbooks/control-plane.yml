@@ -1,0 +1,23 @@
+---
+- hosts: all
+  vars:
+    ansible_python_interpreter: "/home/core/bin/python"
+    ansible_become: true
+    hyperkube:
+      image: quay.io/coreos/hyperkube
+      tag: v1.7.6_coreos.0
+  gather_facts: true
+  tasks:
+  - include_vars: "{{ item }}"
+    with_items:
+    - "vars/master_default.yml"
+  - include_role:
+      name: etcd
+  - include_role:
+      name: flannel
+  - include_role:
+      name: docker
+  - include_role:
+      name: locksmith
+  - include_role:
+      name: k8s-master

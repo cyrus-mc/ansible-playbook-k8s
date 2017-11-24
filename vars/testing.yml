@@ -1,0 +1,9 @@
+---
+pam_limits_limits:
+  soft_nofile:
+    dest: '90-notify_api.conf'
+    domain: '*'
+    type: 'soft'
+    item: 'nofile'
+    value: 64001
+    comment: 'Set the global soft limit on number of files'
