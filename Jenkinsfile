@@ -1,18 +1,20 @@
 @Library('shared-library@master') _
 
-slave {
+withPython(image: 'python:3.6.3-alpine3.6') {
+  slave {
 
-  /* set log retention */
-  properties ([
-    [ $class: 'BuildDiscarderProperty', strategy: [ $class: 'LogRotator', daysToKeeyStr: '7', numToKeep: '10' ] ],
-  ])
+    /* set log retention */
+    properties ([
+      [ $class: 'BuildDiscarderProperty', strategy: [ $class: 'LogRotator', daysToKeeyStr: '7', numToKeep: '10' ] ],
+    ])
 
-  /* set status to success */
-  currentBuild.result = 'SUCCESS'
+    /* set status to success */
+    currentBuild.result = 'SUCCESS'
 
-  stage('Execute') {
-    sh '''
-      /bin/sleep 120
-    '''
+    stage('Execute') {
+      sh '''
+        /bin/sleep 120
+      '''
+    }
   }
 }
