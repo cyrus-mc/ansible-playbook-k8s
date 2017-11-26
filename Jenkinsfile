@@ -37,11 +37,14 @@ withAnsible(image: 'cyrusmc/ansible:2.4.0') {
       stage('Execute playbook') {
         writeFile file: 'inventory.ini', text: "${params.ipaddr}"
 
-        ansiblePlaybook (
-          playbook: "playbooks/${params.component}.yml",
-          inventory: 'inventory.ini',
-          credentialsId: 'coreos',
-        )
+        wrap ([ $class: 'AnsiColorBuildWrapper', colorMapName: 'xterm' ]) {
+          ansiblePlaybook (
+            playbook: "playbooks/${params.component}.yml",
+            inventory: 'inventory.ini',
+            credentialsId: 'coreos',
+            colorized: true
+          )
+        }
       }
 
     }
