@@ -19,7 +19,7 @@ withAnsible(image: 'cyrusmc/ansible:2.4.0') {
     stage('Set Display Name') {
       // this job is used to automate playbook runs as machines are dynamically
       // provisioned. Set the display name to indicate machine this run was for
-      currentBuild.displayName = "${params.hostname} (${params.ipaddr}) : ${params.component}"
+      currentBuild.displayName = "${params.hostname} : ${params.component}"
     }
 
     container('ansible') {
