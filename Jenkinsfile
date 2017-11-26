@@ -38,7 +38,7 @@ withAnsible(image: 'cyrusmc/ansible:2.4.0') {
         writeFile file: 'inventory.ini', text: "${params.ip}"
 
         ansiblePlaybook (
-          playbook: "playbooks/${params.playbook}",
+          playbook: "playbooks/${params.playbook}.yml",
           inventory: 'inventory.ini',
           credentialsId: 'coreos',
         )
