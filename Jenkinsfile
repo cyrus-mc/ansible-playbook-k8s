@@ -1,6 +1,6 @@
 @Library('shared-library@master') _
 
-withAnsible(image: 'cyrusmc/ansible:2.3.0') {
+withAnsible(image: 'cyrusmc/ansible:2.4.0') {
   slave {
 
     /* set log retention */
@@ -22,10 +22,28 @@ withAnsible(image: 'cyrusmc/ansible:2.3.0') {
       currentBuild.displayName = "${params.hostname} : ${params.playbook}"
     }
 
-    stage('Execute') {
-      sh '''
-        /bin/sleep 120
-      '''
+    container('ansible') {
+
+      stage('Download Galaxy Roles') {
+        def exists = fileExists 'requirements.yml'
+
+        if (exists) {
+          sh '''
+            ansible-galaxy install -c -r requirements.yml
+          '''
+        }
+      }
+
+      stage('Execute playbook') {
+        writeFile file: 'inventory.ini', text: "${params.ip}"
+
+        ansiblePlaybook (
+          playbook: "playbooks/${params.playbook}",
+          inventory: 'inventory.ini',
+          credentialsId: 'coreos',
+        )
+      }
+
     }
   }
 }
