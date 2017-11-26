@@ -7,9 +7,9 @@ withAnsible(image: 'cyrusmc/ansible:2.4.0') {
     properties ([
       [ $class: 'BuildDiscarderProperty', strategy: [ $class: 'LogRotator', daysToKeeyStr: '7', numToKeep: '10' ] ],
       parameters ([
-        string(name: 'hostname', defaultValue: 'NOT_SET', description: 'The hostname of the target'),
-        string(name: 'ip', defaultValue: '127.0.0.1', description: 'The accessible IP address of the target'),
-        choice(name: 'playbook', choices: 'control-plane\nnode', description: 'The playbook to execute on the target')
+        string(name: 'hostname', description: 'The hostname of the target'),
+        string(name: 'ipaddr', description: 'The accessible IP address of the target'),
+        choice(name: 'component', choices: 'control-plane\nnode', description: 'The playbook to execute on the target')
       ])
     ])
 
@@ -19,7 +19,7 @@ withAnsible(image: 'cyrusmc/ansible:2.4.0') {
     stage('Set Display Name') {
       // this job is used to automate playbook runs as machines are dynamically
       // provisioned. Set the display name to indicate machine this run was for
-      currentBuild.displayName = "${params.hostname} : ${params.playbook}"
+      currentBuild.displayName = "${params.hostname} (${params.ipaddr}) : ${params.component}"
     }
 
     container('ansible') {
@@ -35,10 +35,10 @@ withAnsible(image: 'cyrusmc/ansible:2.4.0') {
       }
 
       stage('Execute playbook') {
-        writeFile file: 'inventory.ini', text: "${params.ip}"
+        writeFile file: 'inventory.ini', text: "${params.ipaddr}"
 
         ansiblePlaybook (
-          playbook: "playbooks/${params.playbook}.yml",
+          playbook: "playbooks/${params.component}.yml",
           inventory: 'inventory.ini',
           credentialsId: 'coreos',
         )
