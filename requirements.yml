@@ -2,42 +2,42 @@
 - src: yatesr.timezone
 
 # from GitHub
-- src: https://github.com/cyrus-mc/ansible-etcd.git
+- src: https://bitbucket.org/datdevops/ansible-etcd.git
   name: etcd
   scm: git
 
-- src: https://github.com/cyrus-mc/ansible-docker.git
+- src: https://bitbucket.org/datdevops/ansible-docker.git
   name: docker
   scm: git
 
-- src: https://github.com/cyrus-mc/ansible-flannel.git
+- src: https://bitbucket.org/datdevops/ansible-flannel.git
   name: flannel
   scm: git
 
-- src: https://github.com/cyrus-mc/ansible-k8s_master.git
+- src: https://bitbucket.org/datdevops/ansible-k8s-master.git
   name: k8s-master
   scm: git
 
-- src: https://github.com/cyrus-mc/ansible-k8s_worker.git
+- src: https://bitbucket.org/datdevops/ansible-k8s-worker.git
   name: k8s-worker
   scm: git
 
-- src: https://github.com/cyrus-mc/ansible-locksmith.git
+- src: https://bitbucket.org/datdevops/ansible-locksmith.git
   name: locksmith
   scm: git
 
-- src: https://github.com/cyrus-mc/ansible-timesyncd.git
+- src: https://bitbucket.org/datdevops/ansible-timesyncd.git
   name: timesyncd
   scm: git
 
-- src: https://github.com/cyrus-mc/ansible-udev.git
+- src: https://bitbucket.org/datdevops/ansible-udev.git
   name: udev
   scm: git
 
-- src: https://github.com/cyrus-mc/ansible-sysctl.git
+- src: https://bitbucket.org/datdevops/ansible-sysctl.git
   name: sysctl
   scm: git
 
-- src: https://github.com/cyrus-mc/ansible-transparent_hugepages.git
+- src: https://bitbucket.org/datdevops/ansible-transparent-hugepages.git
   name: transparent_hugepages
   scm: git
