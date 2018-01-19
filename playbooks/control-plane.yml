@@ -5,7 +5,7 @@
     ansible_become: true
     hyperkube:
       image: quay.io/coreos/hyperkube
-      tag: v1.7.6_coreos.0
+      tag: v1.9.2_coreos.0
   gather_facts: true
   tasks:
   - include_vars: "{{ item }}"

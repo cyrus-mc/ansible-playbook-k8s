@@ -16,5 +16,5 @@ locksmithd_control_group: "kubernetes-master"
 # set the version of hyperkube to use
 hyperkube:
   image: quay.io/coreos/hyperkube
-  tag: v1.7.6_coreos.0
+  tag: v1.9.2_coreos.0
 
