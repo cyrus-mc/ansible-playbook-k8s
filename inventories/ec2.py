@@ -1230,6 +1230,7 @@ class Ec2Inventory(object):
             elif key == 'ec2__placement':
                 instance_vars['ec2_placement'] = value.zone
             elif key == 'ec2_tags':
+                instance_vars['ec2_tags'] = {}
                 for tag in value:
                     if self.expand_csv_tags and ',' in tag['Value']:
                         v = list(map(lambda x: x.strip(), tag['Value'].split(',')))
@@ -1237,6 +1238,7 @@ class Ec2Inventory(object):
                         v = tag['Value']
                     key = self.to_safe('ec2_tag_' + tag['Key'])
                     instance_vars[key] = v
+                    instance_vars['ec2_tags'][tag['Key']] = v
             elif key == "ec2_security_groups":
                 group_ids = []
                 group_names = []

@@ -1,11 +1,11 @@
 ---
-- hosts: all
+- hosts: tag_role_api
   vars:
     ansible_python_interpreter: "/home/core/bin/python"
     ansible_become: true
     hyperkube:
       image: quay.io/coreos/hyperkube
-      tag: v1.9.2_coreos.0
+      tag: v1.8.5_coreos.0
   gather_facts: true
   tasks:
   - include_vars: "{{ item }}"

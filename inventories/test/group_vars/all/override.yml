@@ -1,0 +1,12 @@
+k8s_worker_tags: '{{ ec2_tags }}'
+
+k8s_addons:
+  kube-dns:
+    enable: true
+  tiller:
+    enable: true
+    image: gcr.io/kubernetes-helm/tiller
+    tag: v2.8.2
+  ark:
+    enable: true
+    s3_bucket_name: ark.dat-test.internal
